@@ -137,9 +137,13 @@ class Human < Player
 end
 
 class Computer < Player
-  COMPUTER_MATRIX = { 'glados' => 'Glados.new', 'pikachu' => 'Pikachu.new',
-                      'yorha-2b' => 'Yorha2B.new', 'hal-9000' => 'Hal9000.new',
-                      'alita' => 'Alita.new' }
+  COMPUTER_MATRIX = {
+    'glados'    => Proc.new { Glados.new  },
+    'pikachu'   => Proc.new { Pikachu.new },
+    'yorha-2b'  => Proc.new { Yorha2B.new },
+    'hal-9000'  => Proc.new { Hal9000.new },
+    'alita'     => Proc.new { Alita.new   }
+  }
 
   COMPUTERS = %w[(G)LaDOS (P)ikachu (Y)oRHa-2B (H)AL-9000 (A)lita]
 
@@ -327,7 +331,7 @@ class RPSSLGame
     end
 
     comp_choice = retrieve_valid(comp_choice.strip.downcase)
-    @computer = eval(Computer::COMPUTER_MATRIX[comp_choice])
+    @computer = Computer::COMPUTER_MATRIX[comp_choice].call
   end
 
   def display_comp_personality
