@@ -80,26 +80,12 @@ end
 
 class Player
   include UXAmplifiers
-  @@move_history = {}
   attr_reader :name, :choice
-
-  def initialize(name)
-    @@move_history[name] = []
-  end
-
-  def self.move_history
-    @@move_history
-  end
-
-  def update_history(move)
-    @@move_history[name] << move
-  end
 end
 
 class Human < Player
   def initialize
     set_name
-    super(name)
   end
 
   def set_name
@@ -169,10 +155,6 @@ class Computer < Player
     'Alita is Headstrong, emotionally driven and reacts to your last few moves'
   ]
 
-  def initialize(name)
-    super(name)
-  end
-
   def move(_)
     @choice = Move.new(Move::VALID_MOVES.sample)
   end
@@ -181,7 +163,6 @@ end
 class Glados < Computer
   def initialize
     @name = 'GLaDOS'.red
-    super(name)
   end
 
   def move(human)
@@ -198,7 +179,6 @@ end
 class Pikachu < Computer
   def initialize
     @name = 'Pikachu'.red
-    super(name)
   end
 
   def move(_)
@@ -210,7 +190,6 @@ end
 class Yorha2B < Computer
   def initialize
     @name = 'YoRHa-2B'.red
-    super(name)
   end
 
   def move(_)
@@ -221,7 +200,6 @@ end
 class Hal9000 < Computer
   def initialize
     @name = 'HAL-9000'.red
-    super(name)
   end
 
   def move(human)
@@ -239,7 +217,6 @@ end
 class Alita < Computer
   def initialize
     @name = 'Alita'.red
-    super(name)
   end
 
   def move(human)
