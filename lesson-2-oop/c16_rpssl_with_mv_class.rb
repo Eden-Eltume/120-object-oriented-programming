@@ -27,6 +27,18 @@ module UXAmplifiers
   end
 end
 
+class MoveHistory
+  @@move_history = Hash.new { Array.new }
+  
+  def self.move_history
+    @@move_history
+  end
+  
+  def self.update_history(name, move)
+    @@move_history[name] += [move]
+  end
+end
+
 class Move
   WIN_MATRIX = { 'rock'     => %w[lizard scissors],
                  'paper'    => %w[rock spock],
@@ -171,7 +183,7 @@ class Glados < Computer
   end
 
   def move(human)
-    human_mv_history = Player.move_history[human.name]
+    human_mv_history = MoveHistory.move_history[human.name]
     return super if human_mv_history.empty?
 
     frequent_mv = human_mv_history.max_by { |mv| human_mv_history.count(mv) }
@@ -211,7 +223,7 @@ class Hal9000 < Computer
   end
 
   def move(human)
-    human_mv_history = Player.move_history[human.name]
+    human_mv_history = MoveHistory.move_history[human.name]
     return super if human_mv_history.empty?
 
     sample_space = human_mv_history.map do |move|
@@ -229,7 +241,7 @@ class Alita < Computer
   end
 
   def move(human)
-    human_mv_history = Player.move_history[human.name]
+    human_mv_history = MoveHistory.move_history[human.name]
     return super if human_mv_history.empty?
 
     recent_mvs = human_mv_history.last(5)
@@ -365,8 +377,8 @@ class RPSSLGame
   end
 
   def update_move_history(human, computer)
-    human.update_history(human.choice.move)
-    computer.update_history(computer.choice.move)
+    MoveHistory.update_history(human.name, human.choice.move)
+    MoveHistory.update_history(computer.name, computer.choice.move)
   end
 
   def display_moves
