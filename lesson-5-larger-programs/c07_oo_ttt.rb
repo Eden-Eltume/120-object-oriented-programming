@@ -237,7 +237,7 @@ class Hal9000 < Computer
   end
 
   def move!(board)
-    @choice = find_attack_choice(board)
+    @choice = find_offense_choice(board)
     return board[@choice] = marker if @choice
 
     @choice = find_defense_choice(board)
@@ -248,7 +248,7 @@ class Hal9000 < Computer
 
   private
 
-  def find_attack_choice(board)
+  def find_offense_choice(board)
     Board::WINNING_LINES.each do |line|
       mark_sqs, unmark_sqs = board.squares.values_at(*line).parition(&:marked?)
 
