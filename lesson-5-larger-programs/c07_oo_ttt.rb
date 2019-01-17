@@ -250,7 +250,7 @@ class Hal9000 < Computer
 
   def find_offense_choice(board)
     Board::WINNING_LINES.each do |line|
-      mark_sqs, unmark_sqs = board.squares.values_at(*line).parition(&:marked?)
+      mark_sqs, unmark_sqs = board.squares.values_at(*line).partition(&:marked?)
 
       comp_count = mark_sqs.count { |sq| sq.marker == marker }
 
@@ -263,7 +263,7 @@ class Hal9000 < Computer
 
   def find_defense_choice(board)
     Board::WINNING_LINES.each do |line|
-      mark_sqs, unmark_sqs = board.squares.values_at(*line).parition(&:marked?)
+      mark_sqs, unmark_sqs = board.squares.values_at(*line).partition(&:marked?)
 
       human_count = mark_sqs.count { |sq| sq.marker != marker }
 
